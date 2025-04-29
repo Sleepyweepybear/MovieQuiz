@@ -4,7 +4,7 @@ final class MovieQuizViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-                // Создаём view, куда будем добавлять слой
+                    // Создаём view, куда будем добавлять слой
                 let view = UIView()
                 
                 // Загружаем изображение
