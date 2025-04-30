@@ -4,14 +4,15 @@ final class MovieQuizViewController: UIViewController {
 
     @IBOutlet private weak var QuestionTitleLabel: UILabel!
     @IBOutlet private weak var QuestionRatingLabel: UILabel!
+    @IBOutlet weak var Button: UIButton!
+    @IBOutlet private weak var ButtonTitleLabel: UILabel!
+    @IBOutlet weak var NoButton: UIButton!
+    @IBOutlet weak var YesButton: UIButton!
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         QuestionTitleLabel.font = UIFont.ysMedium20
         QuestionRatingLabel.font = UIFont.ysBold23
-        
-        
-        
         
         /*
          Mock-данные

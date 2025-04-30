@@ -26,3 +26,4 @@ extension UIFont {
         UIFont(name: "YSDisplay-Medium", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .medium)
     }
 }
+
