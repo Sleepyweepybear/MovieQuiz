@@ -1,17 +1,41 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController {
+    
+    struct ViewModel {
+      let image: UIImage
+      let question: String
+      let questionNumber: String
+    }
+    
+    // для состояния "Вопрос показан"
+    struct QuizStepViewModel {
+      let image: UIImage
+      let question: String
+      let questionNumber: String
+    }
 
-    @IBOutlet private weak var QuestionTitleLabel: UILabel!
-    @IBOutlet private weak var QuestionRatingLabel: UILabel!
-    @IBOutlet weak var Button: UIButton!
-    @IBOutlet private weak var ButtonTitleLabel: UILabel!
+    // для состояния "Результат квиза"
+    struct QuizResultsViewModel {
+      let title: String
+      let text: String
+      let buttonText: String
+    }
+    // для состояния "Результат ответа"
+    struct QuizResultsAnswerViewModel {
+        let title: String
+    }
+    @IBOutlet private weak var questionTitleLabel: UILabel!
+    @IBOutlet private weak var questionLabel: UILabel!
+    @IBOutlet private weak var indexLabel: UILabel!
+    @IBOutlet private weak var noButton: UIButton!
+    @IBOutlet private weak var yesButton: UIButton!
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        QuestionTitleLabel.font = UIFont.ysMedium20
-        QuestionRatingLabel.font = UIFont.ysBold23
-        
+        questionTitleLabel.font = UIFont.ysMedium20
+        questionLabel.font = UIFont.ysBold23
+        indexLabel.font = UIFont.ysMedium20
         /*
          Mock-данные
          
