@@ -34,6 +34,7 @@
 		AD7AFA542836189F00399704 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		FBC91CB92DC1558F0039F883 /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
 		FBC91CBA2DC1558F0039F883 /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
+		FBCDBDF92DC2613D003FF755 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,6 +221,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				AD1ABAB82831907B00B3E448 /* Base */,
+				FBCDBDF92DC2613D003FF755 /* en */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
