@@ -1,29 +1,26 @@
 import UIKit
 
 extension UIColor {
-    static var ypBlack: UIColor { UIColor(named: "YP Black") ?? UIColor.black }
-    static var ypRed: UIColor { UIColor(named: "YP Red") ?? UIColor.red }
-    static var ypGreen: UIColor { UIColor(named: "YP Green") ?? UIColor.green }
-    static var ypBackground: UIColor { UIColor(named: "YP Background") ?? UIColor.darkGray }
-    static var ypGray: UIColor { UIColor(named: "YP Black") ?? UIColor.gray }
-    static var ypWhite: UIColor { UIColor(named: "YP White") ?? UIColor.white }
+    static var yp_Red: UIColor { return UIColor(named: "YP_Red") ?? .red }
+    static var yp_Green: UIColor { return UIColor(named: "YP_Green") ?? .green }
+    static var yp_Background: UIColor { return UIColor(named: "YP_Background") ?? .darkGray }
+    static var yp_Gray: UIColor { return UIColor(named: "YP_Gray") ?? .gray }
+    static var yp_White: UIColor { return UIColor(named: "YP_White") ?? .white }
+    static var yp_Black: UIColor { return UIColor(named: "YP_Black") ?? .black }
 }
 
-extension UILabel {
-    static var ysMedium20: UIFont {
-        UIFont(name: "YSDisplay-Medium", size: 20) ?? UIFont.systemFont(ofSize: 20, weight: .medium)
+extension UIFont {
+    public enum YSDisplayType: String {
+        case regular = ""
+        case FontBold = "YSDisplay-Bold"
+        case FontMedium = "YSDisplay-Medium"
     }
     
-    static var ysBold23: UIFont {
-        UIFont(name: "YSDisplay-Bold", size: 23) ?? UIFont.systemFont(ofSize: 23, weight: .bold)
+    static func setFont(_ type: YSDisplayType = .regular, size: CGFloat = UIFont.systemFontSize) -> UIFont {
+        return UIFont(name: type.rawValue, size: size)!
     }
-    
-    static var ysBold18: UIFont {
-        UIFont(name: "YSDisplay-Bold", size: 18) ?? UIFont.systemFont(ofSize: 18, weight: .bold)
+        var isBold: Bool {
+               return fontDescriptor.symbolicTraits.contains(.traitBold)
+           }
     }
-    
-    static var ysMedium16: UIFont {
-        UIFont(name: "YSDisplay-Medium", size: 16) ?? UIFont.systemFont(ofSize: 16, weight: .medium)
-    }
-}
 
