@@ -35,17 +35,16 @@ final class MovieQuizViewController: UIViewController {
         let correctAnswer: Bool
     }
     
-    
     // массив аутлетов
-        @IBOutlet private weak var yesButton: UIButton!
-        @IBOutlet private weak var noButton: UIButton!
-        @IBOutlet private weak var imageView: UIImageView!
-        @IBOutlet private weak var textLabel: UILabel!
-        @IBOutlet private weak var counterLabel: UILabel!
+    @IBOutlet private weak var yesButton: UIButton!
+    @IBOutlet private weak var noButton: UIButton!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var textLabel: UILabel!
+    @IBOutlet private weak var counterLabel: UILabel!
     
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
-    // массив вопросов из моковых данных
+ 
     private let questions: [QuizQuestion] = [
         QuizQuestion(
             image: "The Godfather",
@@ -92,11 +91,12 @@ final class MovieQuizViewController: UIViewController {
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        show(quiz: convert(model: questions[currentQuestionIndex]))
+    }
+    private func setUp () {
         imageView.layer.cornerRadius = 20
         noButton.layer.cornerRadius = 15
         yesButton.layer.cornerRadius = 15
-        
-        show(quiz: convert(model: questions[currentQuestionIndex]))
     }
     private func show(quiz result: QuizResultsViewModel) {
         let alert = UIAlertController(
@@ -129,7 +129,6 @@ final class MovieQuizViewController: UIViewController {
         }
         imageView.layer.masksToBounds = true
         imageView.layer.borderWidth = 8
-        imageView.layer.cornerRadius = 6
         imageView.layer.borderColor = isCorrect ? UIColor.ypGreen.cgColor : UIColor.ypRed.cgColor
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -146,9 +145,13 @@ final class MovieQuizViewController: UIViewController {
         counterLabel.text = step.questionNumber
     }
     
+    private func setAnswerButtonsState(isEnabled: Bool) {
+        yesButton.isEnabled = isEnabled
+        noButton.isEnabled = isEnabled
+    }
+    
     private func showNextQuestionOrResults() {
-        yesButton.isEnabled = true
-        noButton.isEnabled = true
+        setAnswerButtonsState(isEnabled: true)
         if currentQuestionIndex == questions.count - 1 {
             let text = "Ваш результат: \(correctAnswers)/10" // 1
             let viewModel = QuizResultsViewModel( // 2

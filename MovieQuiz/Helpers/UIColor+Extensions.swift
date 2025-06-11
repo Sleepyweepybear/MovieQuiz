@@ -12,15 +12,16 @@ extension UIColor {
 extension UIFont {
     public enum YSDisplayType: String {
         case regular = ""
-        case FontBold = "YSDisplay-Bold"
-        case FontMedium = "YSDisplay-Medium"
+        case fontBold = "YSDisplay-Bold"
+        case fontMedium = "YSDisplay-Medium"
     }
     
     static func setFont(_ type: YSDisplayType = .regular, size: CGFloat = UIFont.systemFontSize) -> UIFont {
-        return UIFont(name: type.rawValue, size: size)!
+        guard let font = UIFont(name: type.rawValue, size: size) else {
+            return UIFont.systemFont(ofSize: size)
+        }
+        let isBold = font.fontDescriptor.symbolicTraits.contains(.traitBold)
+        
+        return font
     }
-        var isBold: Bool {
-               return fontDescriptor.symbolicTraits.contains(.traitBold)
-           }
-    }
-
+}

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 55;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,8 +16,8 @@
 		AD5EE5DE284D7887003966EF /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD5EE5DD284D7887003966EF /* UIColor+Extensions.swift */; };
 		AD77F5742857F8810062FB14 /* Date+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD77F5732857F8810062FB14 /* Date+Extensions.swift */; };
 		AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7AFA542836189F00399704 /* Array+Extensions.swift */; };
-		FBC91CBC2DC1558F0039F883 /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBC91CB92DC1558F0039F883 /* YS Display-Bold.ttf */; };
-		FBC91CBD2DC1558F0039F883 /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBC91CBA2DC1558F0039F883 /* YS Display-Medium.ttf */; };
+		FBB567E82DF974B2008DE13C /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBB567E62DF974B2008DE13C /* YS Display-Medium.ttf */; };
+		FBB567E92DF974B2008DE13C /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBB567E52DF974B2008DE13C /* YS Display-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,8 +32,8 @@
 		AD5EE5DD284D7887003966EF /* UIColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		AD77F5732857F8810062FB14 /* Date+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extensions.swift"; sourceTree = "<group>"; };
 		AD7AFA542836189F00399704 /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
-		FBC91CB92DC1558F0039F883 /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
-		FBC91CBA2DC1558F0039F883 /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
+		FBB567E52DF974B2008DE13C /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
+		FBB567E62DF974B2008DE13C /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		FBCDBDF92DC2613D003FF755 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,7 +77,7 @@
 				AD1ABABC2831907F00B3E448 /* LaunchScreen.storyboard */,
 				AD1ABABA2831907F00B3E448 /* Assets.xcassets */,
 				AD1ABABF2831907F00B3E448 /* Info.plist */,
-				FBC91CBB2DC1558F0039F883 /* MovieQuizFonts */,
+				FBB567E72DF974B2008DE13C /* MovieQuizFonts */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -122,11 +122,11 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
-		FBC91CBB2DC1558F0039F883 /* MovieQuizFonts */ = {
+		FBB567E72DF974B2008DE13C /* MovieQuizFonts */ = {
 			isa = PBXGroup;
 			children = (
-				FBC91CB92DC1558F0039F883 /* YS Display-Bold.ttf */,
-				FBC91CBA2DC1558F0039F883 /* YS Display-Medium.ttf */,
+				FBB567E52DF974B2008DE13C /* YS Display-Bold.ttf */,
+				FBB567E62DF974B2008DE13C /* YS Display-Medium.ttf */,
 			);
 			path = MovieQuizFonts;
 			sourceTree = "<group>";
@@ -158,6 +158,10 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				KnownAssetTags = (
+					"YS Display-Bold.ttf",
+					"YS Display-Medium.ttf",
+				);
 				LastSwiftUpdateCheck = 1330;
 				LastUpgradeCheck = 1520;
 				ORGANIZATIONNAME = "";
@@ -168,7 +172,6 @@
 				};
 			};
 			buildConfigurationList = AD1ABAA92831907B00B3E448 /* Build configuration list for PBXProject "MovieQuiz" */;
-			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -176,6 +179,7 @@
 				Base,
 			);
 			mainGroup = AD1ABAA52831907B00B3E448;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = AD1ABAAF2831907B00B3E448 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -190,8 +194,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FBC91CBC2DC1558F0039F883 /* YS Display-Bold.ttf in Resources */,
-				FBC91CBD2DC1558F0039F883 /* YS Display-Medium.ttf in Resources */,
+				FBB567E82DF974B2008DE13C /* YS Display-Medium.ttf in Resources */,
+				FBB567E92DF974B2008DE13C /* YS Display-Bold.ttf in Resources */,
 				AD1ABABE2831907F00B3E448 /* LaunchScreen.storyboard in Resources */,
 				AD1ABABB2831907F00B3E448 /* Assets.xcassets in Resources */,
 				AD1ABAB92831907B00B3E448 /* Main.storyboard in Resources */,
