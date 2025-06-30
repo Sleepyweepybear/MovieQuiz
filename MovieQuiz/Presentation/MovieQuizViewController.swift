@@ -59,8 +59,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         alertPresenter = AlertPresenter(viewController: self)
         questionFactory = QuestionFactory(delegate: self)
         questionFactory?.requestNextQuestion()
-        statisticService = StatisticService()
-
+        statisticService = StatisticServiceImplementation()
+        
     }
     // MARK: - QuestionFactoryDelegate.
     
@@ -121,9 +121,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     private func showNextQuestionOrResults() {
         setAnswerButtonsState(isEnabled: true)
-        
         if currentQuestionIndex == questionsAmount - 1 {
-            statisticService?.store(correct: correctAnswers, total: questionsAmount)
+        statisticService?.store(correct: correctAnswers, total: questionsAmount)
 
             let bestGame = statisticService?.bestGame
             let totalAccuracy = statisticService?.totalAccuracy ?? 0
