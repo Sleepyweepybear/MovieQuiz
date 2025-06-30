@@ -50,14 +50,17 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
     private var alertPresenter: AlertPresenterProtocol?
+    private var statisticService: StatisticServiceProtocol?
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         alertPresenter = AlertPresenter(viewController: self)
         questionFactory = QuestionFactory(delegate: self)
         questionFactory?.requestNextQuestion()
+        statisticService = StatisticService()
+
     }
     // MARK: - QuestionFactoryDelegate.
     
@@ -120,22 +123,32 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         setAnswerButtonsState(isEnabled: true)
         
         if currentQuestionIndex == questionsAmount - 1 {
-            let text = correctAnswers == questionsAmount ?
-            "Поздравляем, вы ответили на 10 из 10!" :
-            "Вы ответили на \(correctAnswers) из 10, попробуйте ещё раз!"
-            
-            let alertModel = AlertModel(title: "Этот раунд окончен!",
-            message: text,
-            buttonText: "Сыграть еще раз",
-            completion: { [weak self] in
-                guard let self = self else { return }
-                self.currentQuestionIndex = 0
-                self.correctAnswers = 0
-                self.questionFactory?.requestNextQuestion()
-            }
+            statisticService?.store(correct: correctAnswers, total: questionsAmount)
+
+            let bestGame = statisticService?.bestGame
+            let totalAccuracy = statisticService?.totalAccuracy ?? 0
+            let gamesCount = statisticService?.gamesCount ?? 0
+            let formattedDate = bestGame?.date.dateTimeString ?? ""
+            let message = """
+            Ваш результат: \(correctAnswers)/\(questionsAmount)
+            Количество сыгранных квизов: \(gamesCount)
+            Рекорд: \(bestGame?.correct ?? 0)/\(bestGame?.total ?? 0) (\(formattedDate))
+            Средняя точность: \(String(format: "%.2f", totalAccuracy))%
+            """
+
+            let alertModel = AlertModel(
+                title: "Этот раунд окончен!",
+                message: message,
+                buttonText: "Сыграть ещё раз",
+                completion: { [weak self] in
+                    guard let self = self else { return }
+                    self.currentQuestionIndex = 0
+                    self.correctAnswers = 0
+                    self.questionFactory?.requestNextQuestion()
+                }
             )
-            
             alertPresenter?.present(alertModel)
+            
         } else {
             currentQuestionIndex += 1
             questionFactory?.requestNextQuestion()
