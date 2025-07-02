@@ -1,6 +1,6 @@
 import UIKit
 
-struct QuizStepViewModel {
+private struct ViewModel {
     let image: UIImage
     let question: String
     let questionNumber: String

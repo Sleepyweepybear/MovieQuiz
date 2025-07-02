@@ -2,47 +2,7 @@ import UIKit
 
 final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
-    // MARK: - ViewModels
-
-    private struct ViewModel {
-        let image: UIImage
-        let question: String
-        let questionNumber: String
-    }
-
-    private struct QuizResultsAnswerViewModel {
-        let title: String
-        let text: String
-        let buttonText: String
-    }
-    
-    // MARK: - Button Actions
-
-    @IBAction private func yesButtonClicked(_ sender: UIButton) {
-        noButton.isEnabled = false
-        guard let currentQuestion = currentQuestion else { return }
-        let givenAnswer = true
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-    }
-    
-    @IBAction private func noButtonClicked(_ sender: UIButton) {
-        yesButton.isEnabled = false
-        guard let currentQuestion = currentQuestion else { return }
-        let givenAnswer = false
-            
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
-    }
-    
-    // MARK: - Outlets
-
-    @IBOutlet private weak var yesButton: UIButton!
-    @IBOutlet private weak var noButton: UIButton!
-    @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var textLabel: UILabel!
-    @IBOutlet private weak var counterLabel: UILabel!
-    
-    // MARK: - Properties
+    // MARK: - Public Properties
 
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
@@ -51,17 +11,33 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private var currentQuestion: QuizQuestion?
     private var alertPresenter: AlertPresenterProtocol?
     private var statisticService: StatisticServiceProtocol?
+    
+    // MARK: - Outlets
 
-    // MARK: - Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    @IBOutlet private weak var yesButton: UIButton!
+    @IBOutlet private weak var noButton: UIButton!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var textLabel: UILabel!
+    @IBOutlet private weak var counterLabel: UILabel!
 
-        alertPresenter = AlertPresenter(viewController: self)
-        questionFactory = QuestionFactory(delegate: self)
-        questionFactory?.requestNextQuestion()
-        statisticService = StatisticServiceImplementation()
+    // MARK: - IBAction
+
+    @IBAction private func yesButtonClicked(_ sender: UIButton) {
+        noButton.isEnabled = false
+        guard let currentQuestion else { return }
+        let givenAnswer = true
         
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
     }
+    
+    @IBAction private func noButtonClicked(_ sender: UIButton) {
+        yesButton.isEnabled = false
+        guard let currentQuestion else { return }
+        let givenAnswer = false
+            
+        showAnswerResult(isCorrect: givenAnswer == currentQuestion.correctAnswer)
+    }
+    
     // MARK: - QuestionFactoryDelegate.
     
     func didReceiveNextQuestion(question: QuizQuestion?) {
@@ -76,6 +52,19 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self?.show(quiz: viewModel)
         }
     }
+    
+    // MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        alertPresenter = AlertPresenter(viewController: self)
+        questionFactory = QuestionFactory(delegate: self)
+        questionFactory?.requestNextQuestion()
+        statisticService = StatisticServiceImplementation()
+        
+    }
+    
+    // MARK: - Private Methods
     
     private func setUp () {
         imageView.layer.cornerRadius = 20
