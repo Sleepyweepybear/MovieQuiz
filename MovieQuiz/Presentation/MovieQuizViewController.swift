@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
+final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, AlertPresenterProtocol {
     
     // MARK: - Public Properties
 
@@ -9,7 +9,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private let questionsAmount = 10
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
-    private var alertPresenter: AlertPresenterProtocol?
+    private lazy var alertPresenter = AlertPresenter(view: self)
     private var statisticService: StatisticServiceProtocol?
     
     // MARK: - Outlets
@@ -66,11 +66,18 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         }
     }
     
+    // MARK: - AlertPresenterProtocol
+
+    func present(alert: UIAlertController, animated: Bool) {
+        if presentedViewController == nil {
+            self.present(alert, animated: animated)
+        }
+    }
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        alertPresenter = AlertPresenter(viewController: self)
         questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         statisticService = StatisticServiceImplementation()
         
@@ -92,6 +99,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     private func hideLoadingIndicator() {
         activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
     }
     
     private func showNetworkError(message: String) {
@@ -108,7 +116,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self.questionFactory?.requestNextQuestion()
         }
         
-        alertPresenter?.show(model)
+        alertPresenter.show(alert: model)
     }
     
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
@@ -153,8 +161,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private func showNextQuestionOrResults() {
         setAnswerButtonsState(isEnabled: true)
         if currentQuestionIndex == questionsAmount - 1 {
-        statisticService?.store(correct: correctAnswers, total: questionsAmount)
-
+            statisticService?.store(correct: correctAnswers, total: questionsAmount)
+            
             let bestGame = statisticService?.bestGame
             let totalAccuracy = statisticService?.totalAccuracy ?? 0
             let gamesCount = statisticService?.gamesCount ?? 0
@@ -165,7 +173,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             Рекорд: \(bestGame?.correct ?? 0)/\(bestGame?.total ?? 0) (\(formattedDate))
             Средняя точность: \(String(format: "%.2f", totalAccuracy))%
             """
-
+            
             let alertModel = AlertModel(
                 title: "Этот раунд окончен!",
                 message: message,
@@ -177,7 +185,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                     self.questionFactory?.requestNextQuestion()
                 }
             )
-            alertPresenter?.show(alertModel)
+            alertPresenter.show(alert: alertModel)
             
         } else {
             currentQuestionIndex += 1
