@@ -7,7 +7,7 @@ final class AlertPresenter: AlertPresenterProtocol {
         self.viewController = viewController
     }
 
-    func present(_ model: AlertModel) {
+    func show(_ model: AlertModel) {
         let alert = UIAlertController(
             title: model.title,
             message: model.message,

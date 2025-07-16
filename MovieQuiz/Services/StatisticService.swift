@@ -1,5 +1,5 @@
 import Foundation
 
-final class StatisticService {
+class StatisticService {
     
 }

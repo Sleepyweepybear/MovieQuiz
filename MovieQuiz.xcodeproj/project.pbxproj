@@ -32,6 +32,9 @@
 		FBB567E82DF974B2008DE13C /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBB567E62DF974B2008DE13C /* YS Display-Medium.ttf */; };
 		FBB567E92DF974B2008DE13C /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FBB567E52DF974B2008DE13C /* YS Display-Bold.ttf */; };
 		FBE4780B2E12C611005FF206 /* StatisticServiceImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBE4780A2E12C5FE005FF206 /* StatisticServiceImplementation.swift */; };
+		FBFC92212E27C31200F88D4C /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFC92202E27C30A00F88D4C /* NetworkClient.swift */; };
+		FBFC92232E27C3A200F88D4C /* MostPopularMovies.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFC92222E27C39B00F88D4C /* MostPopularMovies.swift */; };
+		FBFC92252E27C45100F88D4C /* MoviesLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBFC92242E27C44E00F88D4C /* MoviesLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +66,9 @@
 		FBB567E62DF974B2008DE13C /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		FBCDBDF92DC2613D003FF755 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		FBE4780A2E12C5FE005FF206 /* StatisticServiceImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticServiceImplementation.swift; sourceTree = "<group>"; };
+		FBFC92202E27C30A00F88D4C /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
+		FBFC92222E27C39B00F88D4C /* MostPopularMovies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MostPopularMovies.swift; sourceTree = "<group>"; };
+		FBFC92242E27C44E00F88D4C /* MoviesLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +85,7 @@
 		611342392B701CF6003FC2A4 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				FBFC92222E27C39B00F88D4C /* MostPopularMovies.swift */,
 				FB0BD6652E15E60600D46910 /* QuizResultsAnswerViewModel.swift */,
 				FB0BD6632E15E5BA00D46910 /* ViewModel.swift */,
 				FB5E61472E0D5C9C00A2DB12 /* AlertModel.swift */,
@@ -92,6 +99,8 @@
 		6113423A2B701CF8003FC2A4 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				FBFC92242E27C44E00F88D4C /* MoviesLoader.swift */,
+				FBFC92202E27C30A00F88D4C /* NetworkClient.swift */,
 				FBE4780A2E12C5FE005FF206 /* StatisticServiceImplementation.swift */,
 				FB8437AC2E12A73200D12F6A /* StatisticService.swift */,
 				FB8437AA2E12A62B00D12F6A /* StatisticServiceProtocol.swift */,
@@ -264,12 +273,15 @@
 				FB5E614A2E0D5D7C00A2DB12 /* AlertPresenter.swift in Sources */,
 				FB5E61482E0D5CA100A2DB12 /* AlertModel.swift in Sources */,
 				AD7AFA552836189F00399704 /* Array+Extensions.swift in Sources */,
+				FBFC92232E27C3A200F88D4C /* MostPopularMovies.swift in Sources */,
 				FB8437AB2E12A62E00D12F6A /* StatisticServiceProtocol.swift in Sources */,
 				FB5E614C2E0D5EE300A2DB12 /* AlertPresenterProtocol.swift in Sources */,
 				FB5E61432E0C173000A2DB12 /* QuestionFactoryProtocol.swift in Sources */,
 				FB5E61452E0C31A500A2DB12 /* QuestionFactoryDelegate.swift in Sources */,
+				FBFC92252E27C45100F88D4C /* MoviesLoader.swift in Sources */,
 				AD1ABAB62831907B00B3E448 /* MovieQuizViewController.swift in Sources */,
 				FB5E613D2E0AD78700A2DB12 /* QuizStepViewModel.swift in Sources */,
+				FBFC92212E27C31200F88D4C /* NetworkClient.swift in Sources */,
 				FB5E61412E0AD79700A2DB12 /* QuizQuestion.swift in Sources */,
 				FB0BD6642E15E5C100D46910 /* ViewModel.swift in Sources */,
 				FB5E613A2E0AD46000A2DB12 /* QuestionFactory.swift in Sources */,
