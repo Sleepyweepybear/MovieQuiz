@@ -1,6 +1,6 @@
 import UIKit
 
-final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
+final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate, AlertPresenterProtocol {
     
     // MARK: - Public Properties
 
@@ -9,7 +9,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private let questionsAmount = 10
     private var questionFactory: QuestionFactoryProtocol?
     private var currentQuestion: QuizQuestion?
-    private var alertPresenter: AlertPresenterProtocol?
+    private lazy var alertPresenter = AlertPresenter(view: self)
     private var statisticService: StatisticServiceProtocol?
     
     // MARK: - Outlets
@@ -19,11 +19,14 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var textLabel: UILabel!
     @IBOutlet private weak var counterLabel: UILabel!
+    @IBOutlet private var activityIndicator: UIActivityIndicatorView!
+
 
     // MARK: - IBAction
 
     @IBAction private func yesButtonClicked(_ sender: UIButton) {
         noButton.isEnabled = false
+        yesButton.isEnabled = false
         guard let currentQuestion else { return }
         let givenAnswer = true
         
@@ -32,6 +35,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     @IBAction private func noButtonClicked(_ sender: UIButton) {
         yesButton.isEnabled = false
+        noButton.isEnabled = false
         guard let currentQuestion else { return }
         let givenAnswer = false
             
@@ -39,6 +43,15 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     
     // MARK: - QuestionFactoryDelegate.
+    
+    func didLoadDataFromServer() {
+        activityIndicator.isHidden = true
+        questionFactory?.requestNextQuestion()
+    }
+
+    func didFailToLoadData(with error: Error) {
+        showNetworkError(message: error.localizedDescription)
+    }
     
     func didReceiveNextQuestion(question: QuizQuestion?) {
         guard let question = question else {
@@ -53,15 +66,23 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         }
     }
     
+    // MARK: - AlertPresenterProtocol
+
+    func present(alert: UIAlertController, animated: Bool) {
+        if presentedViewController == nil {
+            self.present(alert, animated: animated)
+        }
+    }
+    
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        alertPresenter = AlertPresenter(viewController: self)
-        questionFactory = QuestionFactory(delegate: self)
-        questionFactory?.requestNextQuestion()
+        questionFactory = QuestionFactory(moviesLoader: MoviesLoader(), delegate: self)
         statisticService = StatisticServiceImplementation()
         
+        showLoadingIndicator()
+        questionFactory?.loadData()
     }
     
     // MARK: - Private Methods
@@ -72,9 +93,35 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         yesButton.layer.cornerRadius = 15
     }
     
+    private func showLoadingIndicator() {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+    }
+    private func hideLoadingIndicator() {
+        activityIndicator.isHidden = true
+        activityIndicator.stopAnimating()
+    }
+    
+    private func showNetworkError(message: String) {
+        hideLoadingIndicator()
+        
+        let model = AlertModel(title: "Ошибка",
+                               message: message,
+                               buttonText: "Попробовать еще раз") { [weak self] in
+            guard let self = self else { return }
+            
+            self.currentQuestionIndex = 0
+            self.correctAnswers = 0
+            
+            self.questionFactory?.requestNextQuestion()
+        }
+        
+        alertPresenter.show(alert: model)
+    }
+    
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         return QuizStepViewModel(
-            image: UIImage(named: model.image) ?? UIImage(),
+            image: UIImage(data: model.image) ?? UIImage(),
             question: model.text,
             questionNumber: "\(currentQuestionIndex + 1)/\(questionsAmount)")
     }
@@ -101,6 +148,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
         imageView.image = step.image
         textLabel.text = step.question
         counterLabel.text = step.questionNumber
+        
+        yesButton.isEnabled = true
+        noButton.isEnabled = true
     }
     
     private func setAnswerButtonsState(isEnabled: Bool) {
@@ -111,8 +161,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     private func showNextQuestionOrResults() {
         setAnswerButtonsState(isEnabled: true)
         if currentQuestionIndex == questionsAmount - 1 {
-        statisticService?.store(correct: correctAnswers, total: questionsAmount)
-
+            statisticService?.store(correct: correctAnswers, total: questionsAmount)
+            
             let bestGame = statisticService?.bestGame
             let totalAccuracy = statisticService?.totalAccuracy ?? 0
             let gamesCount = statisticService?.gamesCount ?? 0
@@ -123,7 +173,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             Рекорд: \(bestGame?.correct ?? 0)/\(bestGame?.total ?? 0) (\(formattedDate))
             Средняя точность: \(String(format: "%.2f", totalAccuracy))%
             """
-
+            
             let alertModel = AlertModel(
                 title: "Этот раунд окончен!",
                 message: message,
@@ -135,7 +185,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
                     self.questionFactory?.requestNextQuestion()
                 }
             )
-            alertPresenter?.present(alertModel)
+            alertPresenter.show(alert: alertModel)
             
         } else {
             currentQuestionIndex += 1
