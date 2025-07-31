@@ -2,9 +2,11 @@ import UIKit
 
 class AlertPresenter {
     private weak var view: AlertPresenterProtocol?
+    private weak var viewController: UIViewController?
     
-    init(view: AlertPresenterProtocol?) {
+    init(view: AlertPresenterProtocol, viewController: UIViewController) {
         self.view = view
+        self.viewController = viewController
     }
     
     func show(alert model: AlertModel) {
@@ -19,6 +21,9 @@ class AlertPresenter {
         
         alert.addAction(action)
         view?.present(alert: alert, animated: true)
+        
+        if viewController?.presentedViewController == nil {
+            view?.present(alert: alert, animated: true)
+        }
     }
 }
-
